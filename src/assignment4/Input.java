@@ -41,6 +41,10 @@ public class Input {
 			System.out.print("One or both of the words are not the correct length: ");
 			return false;
 		}
+		if (!wordlist.inDictionary(Split[0]) || !wordlist.inDictionary(Split[1])) {
+			System.out.print("One or both of these words are not in the dictionary: ");
+			return false;
+		}
 		return true;
 	}
 
@@ -49,11 +53,8 @@ public class Input {
 			String line = input.nextLine();
 			if (correctLine(line)) {
 				String[] Split = line.split("\\s+");
-				if (!wordlist.inDictionary(Split[0]) || !wordlist.inDictionary(Split[1])) {
-					throw new NoSuchLadderException("One or both of these words are not in the dictionary");
-				} else {
-					return Split;
-				}
+				return Split;
+
 			} else {
 				throw new NoSuchLadderException("Ignoring Line");
 			}
