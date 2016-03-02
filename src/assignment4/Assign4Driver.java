@@ -4,23 +4,39 @@ import java.util.List;
 import java.io.File;
 import java.io.FileNotFoundException;
 
-public class Assign4Driver
-{
-    public static void main(String[] args) throws FileNotFoundException
-    {
-        // Create a word ladder solver object
-       	Dictionary x = new Dictionary("A4words.dat");
+public class Assign4Driver {
+	public static void main(String[] args) throws FileNotFoundException {
 
-//        Assignment4Interface wordLadderSolver = new WordLadderSolver();
-//
-//        try 
-//        {
-//            List<String> result = wordLadderSolver.computeLadder("money", "honey");
-//            boolean correct = wordLadderSolver.validateResult("money", "honey", result);
-//        } 
-//        catch (NoSuchLadderException e) 
-//        {
-//            e.printStackTrace();
-//        }
-    }
+		// Dictionary x = new Dictionary(); don't need dictionary in driver, but
+		// here's how to define it
+		// Input object will sort thru the lines of the file
+		Input in = new Input(args);
+		// Initialize to not null
+		String[] output = { "Begin", "Ladder" };
+		// Create a word ladder solver object
+		Assignment4Interface wordLadderSolver = new WordLadderSolver();
+		// when output is null, there is no next line
+		while (output != null) {
+			try {
+				output = in.getLadderWords();
+				if (output != null) {
+					// print the two words
+					System.out.println(output[0] + " " + output[1]);
+					// solve the ladder
+					List<String> result = wordLadderSolver.computeLadder(output[0], output[1]);
+					boolean correct = wordLadderSolver.validateResult("money", "honey", result);
+					if (correct) {
+						// print it
+					}
+					System.out.println("*****");
+
+				}
+				// exception should catch all errors
+			} catch (NoSuchLadderException e) {
+				// e.printStackTrace();
+				System.out.println(e.getMessage());
+			}
+		}
+
+	}
 }

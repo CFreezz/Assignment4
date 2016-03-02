@@ -10,11 +10,11 @@ import java.util.Scanner;
 public class Dictionary {
 	// uses a hashtable to store the dictionary
 	protected Hashtable<String, Integer> dictionaryHash;
-
-	// constructor needs to be passed the filename of the dicitonary
+	protected String filename = "A4words.dat";
+	// constructor takes dictionary from the filename
 	// it then sorts into a hashtbale, with load factor of .5 to optimize speed
 	// over data storage
-	public Dictionary(String filename) throws FileNotFoundException {
+	public Dictionary() throws FileNotFoundException {
 
 		dictionaryHash = new Hashtable<String, Integer>(10, (float) .50);
 		Scanner input;
@@ -68,7 +68,7 @@ public class Dictionary {
 	static char alphabet[] = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r',
 			's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
 
-	public List<String> oneLetterDifference(String word, int index) {
+	public String[] oneLetterDifference(String word, int index) {
 		if (index < 0 || index > 4) {
 			System.err.println("Index must be between 0 and 4");
 			return null;
@@ -85,7 +85,8 @@ public class Dictionary {
 				}
 			}
 		}
-		return result;
+		String[] ArrayResult = (String[]) result.toArray();
+		return ArrayResult;
 	}
 
 }
