@@ -8,23 +8,20 @@ import java.util.Scanner;
 
 public class Input {
 	protected Scanner input;
-	protected Dictionary wordlist = new Dictionary();
+	protected Dictionary wordlist;// = new Dictionary();
 
-	protected Input(String[] args) throws FileNotFoundException {
+	protected Input(String file, String dictionary) throws FileNotFoundException {
 		System.out.println("Initializing Input File\n");
-		if (args.length == 1) {
-
+		wordlist = new Dictionary(dictionary);
 			try { // check if file exists, if yes, continue below
-				input = new Scanner(new File(args[0]));
+				input = new Scanner(new File(file));
 
 			} catch (FileNotFoundException e) { // file does not exist, handle
 												// it
-				System.out.println("Cannot find file " + args[0]);
+				System.out.println("Cannot find file " + file);
 				System.exit(0);
 			}
-		} else {
-			System.out.println("Incorrect number of arguments");
-		}
+
 	}
 
 	public boolean correctLine(String Line) {
@@ -34,15 +31,27 @@ public class Input {
 		}
 		String[] Split = Line.split("\\s+");
 		if (Split.length != 2) {
-			System.out.print("Line contains too many or too few words: ");
+			System.out.print("Line does not contain two words: ");
 			return false;
 		}
-		if (Split[0].length() != 5 || Split[1].length() != 5) {
-			System.out.print("One or both of the words are not the correct length: ");
+		if (Split[0].length() != 5){
+			System.out.print(Split[0] + " Is not the correct length: ");
 			return false;
 		}
-		if (!wordlist.inDictionary(Split[0]) || !wordlist.inDictionary(Split[1])) {
-			System.out.print("One or both of these words are not in the dictionary: ");
+		if (Split[1].length() != 5){
+			System.out.print(Split[1] + " Is not the correct length: ");
+			return false;
+		}
+		if (!Dictionary.inDictionary(Split[0])) {
+			System.out.print(Split[0] + " is not in the dictionary: ");
+			return false;
+		}
+		if (!Dictionary.inDictionary(Split[1])) {
+			System.out.print(Split[1] + " is not in the dictionary: ");
+			return false;
+		}
+		if (Split[0].equals(Split[1])) {
+			System.out.print("These words are the same: ");
 			return false;
 		}
 		return true;

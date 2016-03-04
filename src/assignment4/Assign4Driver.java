@@ -10,8 +10,8 @@ public class Assign4Driver {
 		// Dictionary x = new Dictionary(); don't need dictionary in driver, but
 		// here's how to define it
 		
-		// Input object will sort thru the lines of the file
-		Input in = new Input(args);
+		// Input object will sort thru the lines of the file, needs to be passed dictionary file
+		Input in = new Input(args[1], args[0]);
 		// Initialize output to not null
 		String[] output = { "Begin", "Ladder" };
 		// Create a word ladder solver object
@@ -26,16 +26,20 @@ public class Assign4Driver {
 					// solve the ladder
 					List<String> result = wordLadderSolver.computeLadder(output[0], output[1]);
 					boolean correct = wordLadderSolver.validateResult(output[0], output[1], result);
+
+
 					if (correct) {
-						// print it
+						System.out.println(result);// print it
 					}
-					System.out.println("*****");
+				
 
 				}
 				// exception should catch all errors
 			} catch (NoSuchLadderException e) {
 				// e.printStackTrace();
 				System.out.println(e.getMessage());
+			} finally{
+				System.out.println("**********");
 			}
 		}
 

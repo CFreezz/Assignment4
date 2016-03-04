@@ -9,13 +9,13 @@ import java.util.Scanner;
 
 public class Dictionary {
 	// uses a hashtable to store the dictionary
-	protected Hashtable<String, Integer> dictionaryHash;
-	protected String filename = "A4words.dat";
+	protected static Hashtable<String, Integer> dictionaryHash;
+	protected String filename;
 	// constructor takes dictionary from the filename
 	// it then sorts into a hashtbale, with load factor of .5 to optimize speed
 	// over data storage
-	public Dictionary() throws FileNotFoundException {
-
+	public Dictionary(String args) throws FileNotFoundException {
+		filename = args;
 		dictionaryHash = new Hashtable<String, Integer>(10, (float) .50);
 		Scanner input;
 		try {
@@ -31,6 +31,7 @@ public class Dictionary {
 					index++;
 				}
 			}
+			dictionaryHash.put("clons", index);
 		} catch (FileNotFoundException e) { // file does not exist, handle
 											// it
 			System.out.println("Cannot find dictionary " + filename);
@@ -52,7 +53,7 @@ public class Dictionary {
 	// dictionary
 	//
 	//
-	public boolean inDictionary(String word) {
+	public static boolean inDictionary(String word) {
 		Integer check = dictionaryHash.get(word);
 		if (check == null) {
 			return false;
@@ -68,7 +69,7 @@ public class Dictionary {
 	static char alphabet[] = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r',
 			's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
 
-	public String[] oneLetterDifference(String word, int index) {
+	public static List<String> oneLetterDifference(String word, int index) {
 		if (index < 0 || index > 4) {
 			System.err.println("Index must be between 0 and 4");
 			return null;
@@ -85,8 +86,8 @@ public class Dictionary {
 				}
 			}
 		}
-		String[] ArrayResult = (String[]) result.toArray();
-		return ArrayResult;
+		//String[] ArrayResult = (String[]) result.toArray();
+		return result;
 	}
 
 }
